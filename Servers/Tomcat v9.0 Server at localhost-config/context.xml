@@ -26,4 +26,31 @@
     <!--
     <Manager pathname="" />
     -->
+    
+    <Resource
+		name="jdbc/shop"
+		auth="Container"
+		type="javax.sql.DataSource"
+		driverClassName="com.mysql.cj.jdbc.Driver"
+		url="jdbc:mysql://127.0.0.1:3306/shop"
+		username="sysh58"
+		password="abc1234"
+		maxTotal="13"
+		maxIdle="8"
+		maxWaitMillis="3000"
+	/>
+    
+    <Resource
+		name="jdbc/jboard"
+		auth="Container"
+		type="javax.sql.DataSource"
+		driverClassName="com.mysql.cj.jdbc.Driver"
+		url="jdbc:mysql://127.0.0.1:3306/jboard"
+		username="sysh58"
+		password="abc1234"
+		maxTotal="13"
+		maxIdle="8"
+		maxWaitMillis="3000"
+	/>
+    
 </Context>
