@@ -46,3 +46,11 @@ CREATE TABLE `Terms` (
 	`terms`		TEXT,
 	`privacy`	TEXT
 );
+
+ALTER TABLE `user` ADD COLUMN `sms` CHAR(1) AFTER `regip`;
+
+
+ALTER TABLE `user` ADD COLUMN `agree2` BOOLEAN AFTER `agree1`;
+
+ALTER TABLE `user` DROP COLUMN `agree1`;
+ALTER TABLE `user` DROP COLUMN `agree2`;

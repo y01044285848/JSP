@@ -24,10 +24,21 @@ List<ArticleDTO> comments = dao.selectComments(no);
 		// 삭제, 수정 버튼은 작성자에게만 보임 -> 이외의 다른 이용자에게는 보이지않음
 		// 보이지 않는 이용자는 스크립트에서 해당 태그를 찾을 수 없어 오류 -> 존재 할때만 스크립트가 실행되도록
 		
+		// 원글 수정
+		const btnModify = document.querySelector('.btnModify');
+		if(btnModify != null){
+			btnModify.onclick = () => {
+				if(confirm('수정 하시겠습니까?')){
+					return true;
+				}else{
+					return false;
+				}
+			}
+		}
+		
 		// 원글 삭제
 		const btnDelete = document.querySelector('.btnDelete');
-		if(btnDelete !== null){
-			
+		if(btnDelete != null){
 			btnDelete.onclick = () => {
 				/*
 				if(confirm('정말 삭제하시겠습니까?')){
@@ -67,6 +78,37 @@ List<ArticleDTO> comments = dao.selectComments(no);
 			});
 		}
 		
+		// 댓글 수정
+		const mod = document.querySelectorAll('.mod');
+		mod.forEach((item)=>{
+			item.onclick = function(e){
+				e.preventDefault();
+				
+				if(this.innerText == '수정'){
+					// 수정모드 전환
+					this.innerText = '수정완료';
+					
+					const textarea = this.parentElement.previousElementSibling;
+					
+					textarea.readOnly = false;
+					textarea.style.background = 'white';
+					textarea.focus();
+				}else{
+					// 수정완료 클릭
+					const form = this.closest('form'); // 상위 노드 중 가장 가까운 form 태그 선택
+					form.submit();
+					
+					// 수정완료 해제
+					this.innerText = '수정';
+					
+					const textarea = this.parentElement.previousElementSibling;
+					
+					textarea.readOnly = true;
+					textarea.style.background = 'transparent';
+					
+				}
+			}
+		});
 		
 	}
 	
@@ -98,7 +140,7 @@ List<ArticleDTO> comments = dao.selectComments(no);
 		<div>
 			<% if (article.getWriter().equals(sessUser.getUid())) {	%>
 			<a href="/jboard1/proc/deleteProc.jsp?no=<%= article.getNo() %>" class="btnDelete">삭제</a> 
-			<a href="#" class="btnModify">수정</a>
+			<a href="/jboard1/modify.jsp?no=<%= article.getNo() %>" class="btnModify">수정</a>
 			<%} %>
 
 			<a href="/jboard1/list.jsp" class="btnList">목록</a>
@@ -110,23 +152,28 @@ List<ArticleDTO> comments = dao.selectComments(no);
 			<%
 			for (ArticleDTO comment : comments) {
 			%>
-			<article class="comment">
-				<span>
-					<span><%=comment.getNick()%></span>
-					<span><%=comment.getRdate().substring(2, 10)%></span>
-				</span>
-			<textarea name="comment" readonly><%=comment.getContent()%></textarea>
-			<%
-				if (comment.getWriter().equals(sessUser.getUid())) {
-			%>
-			<div>
-				<a href="/jboard1/proc/commentDelete.jsp?parent=<%=comment.getParent()%>&no=<%=comment.getNo()%>" class="del">삭제</a>
-				<a href="#">수정</a>
-			</div>
-			<%
-				}
-			%>
-			</article>
+			<form action="/jboard1/proc/commentUpdate.jsp" method="post">
+				<input type="hidden" name="no" value="<%= comment.getNo() %>">
+				<input type="hidden" name="parent" value="<%= comment.getParent() %>">
+				<article class="comment">
+					<span>
+						<span><%=comment.getNick()%></span>
+						<span><%=comment.getRdate().substring(2, 10)%></span>
+					</span>
+					<textarea name="content" readonly><%=comment.getContent()%></textarea>
+					<%
+						if (comment.getWriter().equals(sessUser.getUid())) {
+					%>
+					<div>
+						<a href="/jboard1/proc/commentDelete.jsp?parent=<%=comment.getParent()%>&no=<%=comment.getNo()%>" class="del">삭제</a>
+						<a href="#" class="mod">수정</a>
+					</div>
+					<%
+						}
+					%>
+				</article>
+			</form>
+
 			<%
 			}
 			%>

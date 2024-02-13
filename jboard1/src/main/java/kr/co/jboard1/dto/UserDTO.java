@@ -15,6 +15,7 @@ public class UserDTO {
 	private String regip;
 	private String rdate;
 	private String leaveDate;
+	private String sms;
 	
 	public String getUid() {
 		return uid;
@@ -75,6 +76,13 @@ public class UserDTO {
 	}
 	public void setAddr2(String addr2) {
 		this.addr2 = addr2;
+	}
+	public String getSms() {
+		return sms;
+		
+	}
+	public void setSms(String sms) {
+		this.sms = sms;
 	}
 	public String getRegip() {
 		return regip;

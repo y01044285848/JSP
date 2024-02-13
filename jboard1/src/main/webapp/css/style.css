@@ -227,6 +227,31 @@ main {
     margin: 60px auto;
 }
 
+.list form.search {
+    float: right;
+    margin-top: -14px;
+}
+
+.list form.search > select {
+    width: 80px;
+    height: 26px;
+    border: 1px solid #d7d7d7;
+    outline: none;
+}
+
+.list form.search > input[name=keyword]{
+    width: 200px;
+    height: 26px;
+    text-indent: 6px;
+    border: 1px solid #d7d7d7;
+}
+.list form.search > input[type=submit]{
+    border: 1px solid #d7d7d7;
+    background: #f2f2f2; 
+    color: #111;
+    padding: 6px;
+}
+
 .list > article > p {
     position: absolute;
     right: 0;
@@ -343,13 +368,13 @@ main {
 .view > section > h3 {
     font-weight: bold;
 }
-.view > .commentList > article {
+.view > .commentList article {
     border-top: 1px dotted #999;
     margin-top: 10px;
     padding-top: 10px;
 }
 
-.view > .commentList > article > textarea {
+.view > .commentList article > textarea {
     width: 100%;
     height: 60px;
     padding: 6px;
@@ -358,11 +383,11 @@ main {
     border: 0;
     background: transparent;
 }
-.view > .commentList > article > div {
+.view > .commentList article > div {
     text-align: right;
 }
 
-.view > .commentList > .empty {
+.view > .commentList .empty {
     padding: 20px 0;
     text-align: center;
 }

@@ -6,13 +6,14 @@ public class SQL {
 	public static final String SELECT_TERMS = "SELECT * FROM `terms`";
 	
 	public static final String INSERT_USER = "INSERT INTO `User` SET "
-										   + "`uid`=?,"
-										   + "`pass`=SHA2(?, 256),"
-										   + "`name`=?,"
-										   + "`nick`=?,"
-										   + "`email`=?,"
-										   + "`hp`=?,"
-										   + "`regip`=?,"
+										   + "`uid`=?, "
+										   + "`pass`=SHA2(?, 256), "
+										   + "`name`=?, "
+										   + "`nick`=?, "
+										   + "`email`=?, "
+										   + "`hp`=?, "
+										   + "`regip`=?, "
+										   + "`sms`=?, "
 										   + "`rdate`=NOW()";
 	
 	public static final String SELECT_USER_FOR_LOGIN = "SELECT * FROM `User` WHERE `uid`=? AND `pass`=SHA2(?, 256)";
@@ -49,11 +50,14 @@ public class SQL {
 	
 	public static final String SELECT_ARTICLE = "SELECT * FROM `Article` WHERE `no` = ?"; 
 	
+	public static final String UPDATE_ARTICLE = "UPDATE `Article` SET `title`=?, `content` = ? WHERE `no` = ?";
+	
 	public static final String UPDATE_HIT_COUNT = "UPDATE `Article` SET `hit` = `hit` + 1 WHERE `no`=?"; 
 	
 	public static final String UPDATE_ARTICLE_COMMENT_PLUS = "UPDATE `Article` SET `comment` = `comment` + 1 where `no` = ?";
 	public static final String UPDATE_ARTICLE_COMMENT_MINUS = "UPDATE `Article` SET `comment` = `comment` - 1 where `no` = ?";
 	
+	public static final String UPDATE_COMMENT = "UPDATE `Article` SET `content` = ? where `no` = ?";
 	
 	public static final String DELETE_ARTICLE = "DELETE FROM `Article` WHERE `no`= ? OR `parent` = ?";
 	
