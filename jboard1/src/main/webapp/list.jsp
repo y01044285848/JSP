@@ -5,11 +5,13 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	String pg = request.getParameter("pg");
+	String searchType = request.getParameter("searchType");
+	String keyword = request.getParameter("keyword");
 	
 	ArticleDAO dao = ArticleDAO.getInstance();
 	
 	// 전체 글 갯수 조회
-	int total = dao.selectCountTotal();
+	int total = dao.selectCountTotal(searchType, keyword);
 	
 	// 마지막 페이지 번호 계산
 	int lastPageNum = 0;
@@ -42,33 +44,50 @@
 	// 페이지 시작번호 계산
 	int pageStartNum = total - start;
 	
+	
+	List<ArticleDTO> articles = null;
+	
+	String params = "";
+	
+	if(searchType == null && keyword == null){
 	// 글 조회
-	List<ArticleDTO> articles = dao.selectArticles(start);
+		articles = dao.selectArticles(start);
+	}else{
+	// 검색
+		articles = dao.selectArticlesForSearch(searchType, keyword, start);
+		params = "&searchType=" + searchType + "&keyword=" + keyword;
+	}
+	
 %>
 <%@ include file="./_header.jsp"%>
 <script>
 	window.onload = function{
 		//const searchForm = document.getElementsByClassName('search')[0];
+		/*
 		const btnSearch = document.search.submit;
 		btnSearch.onclick = () =>{
 			alert('검색클릭!');
 		}
-		
+		*/
 	}
 </script>
 <main>
 	<section class="list">
-		<h3>글목록</h3>
+		<h3><a href="/jboard1/list.jsp">글목록</a></h3>
 		
 		<!-- 검색 -->
-		<form action="/jboard1/proc/searchProc.jsp" class="search" name="search">
+		<form action="/jboard1/list.jsp" class="search" name="search">
 			<select name="searchType">
 				<option value="title">제목</option>
 				<option value="content">내용</option>
 				<option value="title_content">제목+내용</option>
 				<option value="writer">작성자</option>
 			</select>
+			<% if(keyword != null){ %>
+			<input type="text" name="keyword" value="<%= keyword %>" placeholder="검색 키워드 입력">
+			<% }else{ %>
 			<input type="text" name="keyword" placeholder="검색 키워드 입력">
+			<% } %>
 			<input type="submit" name="submit" value="검색">
 		</form>
 		
@@ -86,7 +105,7 @@
 				%>
 				<tr>
 					<td><%= pageStartNum-- %></td>
-					<td><a href="/jboard1/view.jsp?no=<%=article.getNo()%>"><%=article.getTitle()%></a>&nbsp;[<%=article.getComment()%>]</td>
+					<td><a href="/jboard1/view.jsp?no=<%=article.getNo() + params %>"><%=article.getTitle()%></a>&nbsp;[<%=article.getComment()%>]</td>
 					<td><%=article.getNick()%></td>
 					<td><%=article.getRdate().substring(2, 10)%></td>
 					<td><%=article.getHit()%></td>

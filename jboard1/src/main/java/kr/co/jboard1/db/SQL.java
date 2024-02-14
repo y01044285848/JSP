@@ -33,13 +33,20 @@ public class SQL {
 												+ "`regip` = ?, "
 												+ "`rdate` = NOW()";
 	
-	public static final String SELECT_COUNT_TOTAL = "SELECT COUNT(*) FROM `Article` WHERE `parent` = 0";
+	public static final String SELECT_COUNT_TOTAL = "SELECT COUNT(*) FROM `Article` AS a "
+												+ "JOIN `User` AS b ON a.writer = b.uid "
+												+ "WHERE `parent` = 0 ";
 	
 	public static final String SELECT_ARTICLES = "SELECT a.*,	b.`nick` FROM `Article` AS a "
 												+ "JOIN `User` AS b ON a.writer = b.uid "
-												+ "WHERE `parent` = 0 "
-												+ "ORDER BY `no` DESC "
-												+ "LIMIT ?, 10";
+												+ "WHERE `parent` = 0 ";
+	
+	public static final String SELECT_ARTICLES_WHERE_TITLE = "AND `title` LIKE ?";											
+	public static final String SELECT_ARTICLES_WHERE_CONTENT = "AND `CONTENT` LIKE ?";											
+	public static final String SELECT_ARTICLES_WHERE_TITLE_CONTENT = "AND (`title` LIKE ? OR `content` LIKE ?)";											
+	public static final String SELECT_ARTICLES_WHERE_WRITER = "AND `nick` LIKE ?";											
+	
+	public static final String SELECT_ARTICES_ORDER_LIMIT = "ORDER BY `no` DESC LIMIT ?, 10";
 	
 	public static final String SELECT_COMMENTS = "SELECT a.*, u.`nick` FROM `Article` AS a "
 												+ "JOIN `user` AS u ON a.writer = u.uid "

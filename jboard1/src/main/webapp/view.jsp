@@ -3,19 +3,27 @@
 <%@page import="kr.co.jboard1.dao.ArticleDAO"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-request.setCharacterEncoding("UTF-8");
-String no = request.getParameter("no");
+	request.setCharacterEncoding("UTF-8");
+	String no = request.getParameter("no");
+	String searchType = request.getParameter("searchType");
+	String keyword = request.getParameter("keyword");
+	
+	ArticleDAO dao = ArticleDAO.getInstance();
+	
+	// 글 조회
+	ArticleDTO article = dao.selectArticle(no);
+	
+	// 글 조회 카운트 업데이트
+	dao.updateHitCount(no);
+	
+	// 댓글 조회
+	List<ArticleDTO> comments = dao.selectComments(no);
 
-ArticleDAO dao = ArticleDAO.getInstance();
+	String params = "";
+	if(searchType != null && keyword != null){
+		params = "?searchType=" + searchType +"&keyword=" + keyword;
+	}
 
-// 글 조회
-ArticleDTO article = dao.selectArticle(no);
-
-// 글 조회 카운트 업데이트
-dao.updateHitCount(no);
-
-// 댓글 조회
-List<ArticleDTO> comments = dao.selectComments(no);
 %>
 
 <%@ include file="./_header.jsp"%>
@@ -143,7 +151,7 @@ List<ArticleDTO> comments = dao.selectComments(no);
 			<a href="/jboard1/modify.jsp?no=<%= article.getNo() %>" class="btnModify">수정</a>
 			<%} %>
 
-			<a href="/jboard1/list.jsp" class="btnList">목록</a>
+			<a href="/jboard1/list.jsp<%= params %>" class="btnList">목록</a>
 		</div>
 
 		<!-- 댓글리스트 -->
