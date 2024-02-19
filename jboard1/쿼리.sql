@@ -54,3 +54,13 @@ ALTER TABLE `user` ADD COLUMN `agree2` BOOLEAN AFTER `agree1`;
 
 ALTER TABLE `user` DROP COLUMN `agree1`;
 ALTER TABLE `user` DROP COLUMN `agree2`;
+
+SELECT * FROM `Article` WHERE `title` LIKE '%사과%';studydbuser1jboard;
+
+CREATE TABLE `FileTest`(
+`fno` INT AUTO_INCREMENT PRIMARY KEY,
+`title` VARCHAR(100),studydb
+`oName` VARCHAR(100),
+`sName` VARCHAR(100),
+`rdate` DATETIME
+);
