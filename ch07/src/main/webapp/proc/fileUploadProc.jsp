@@ -1,3 +1,7 @@
+<%@page import="org.apache.commons.fileupload.FileItem"%>
+<%@page import="org.apache.commons.fileupload.servlet.ServletFileUpload"%>
+<%@page import="org.apache.commons.fileupload.disk.DiskFileItemFactory"%>
+<%@page import="org.apache.commons.fileupload.FileItemFactory"%>
 <%@page import="ch07.FileDTO"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
@@ -7,11 +11,8 @@
 <%@page import="java.util.UUID"%>
 <%@page import="java.io.File"%>
 <%@page import="java.util.Iterator"%>
-<%@page import="org.apache.commons.fileupload.FileItem"%>
 <%@page import="java.util.List"%>
-<%@page import="org.apache.commons.fileupload.disk.DiskFileItemFactory"%>
-<%@page import="org.apache.commons.fileupload.servlet.ServletFileUpload"%>
-<%@page import="org.apache.commons.fileupload.FileItemFactory"%>
+
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	//파일 입출력에서는 사용할 수 없는 형식
