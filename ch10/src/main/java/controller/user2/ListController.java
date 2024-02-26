@@ -18,7 +18,7 @@ public class ListController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	
-	User2Service service = User2Service.getInstance();
+	private User2Service service = User2Service.getInstance();
 	
 	@Override
 	public void init() throws ServletException {

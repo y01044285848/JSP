@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import dto.User2DTO;
 import service.User2Service;
 
-@WebServlet("/user2/register.do")
-public class RegisterController extends HttpServlet{
+@WebServlet("/user2/modify.do")
+public class ModifyController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -25,21 +25,30 @@ public class RegisterController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/user2/register.jsp");
+		String uid = req.getParameter("uid");
+		
+		User2DTO user = service.selectUser2(uid);
+		req.setAttribute("user", user);
+		
+		// modify.do의 데이터로 modify.jsp 화면을 보여주기 위해 forward로 전송
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/user2/modify.jsp");
 		dispatcher.forward(req, resp);
+		
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		User2DTO user = new User2DTO();
-		
 		user.setUid(req.getParameter("uid"));
 		user.setName(req.getParameter("name"));
 		user.setBirth(req.getParameter("birth"));
 		user.setAddr(req.getParameter("addr"));
 		
-		service.insertUser2(user);
+		req.setAttribute("user", user);
+		
+		service.updateUser2(user);
 		
 		resp.sendRedirect("/ch10/user2/list.do");
+		
 	}
 }

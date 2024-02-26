@@ -15,6 +15,8 @@ public class User2Service {
 		return instance;
 	}
 	
+	private User2Service() {}
+	
 	public List<User2DTO> selectUser2s(){
 		return dao.selectUser2s();
 	}
@@ -23,4 +25,15 @@ public class User2Service {
 		dao.insertUser2(user);
 	}
 	
+	public void deleteUser2(String uid) {
+		dao.deleteUser2(uid);
+	}
+	
+	public User2DTO selectUser2(String uid) {
+		return dao.selectUser2(uid);
+	}
+	
+	public void updateUser2(User2DTO user) {
+		dao.updateUser2(user);
+	}
 }

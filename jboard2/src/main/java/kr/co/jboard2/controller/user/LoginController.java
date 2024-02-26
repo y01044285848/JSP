@@ -1,4 +1,4 @@
-package controller.user2;
+package kr.co.jboard2.controller.user;
 
 import java.io.IOException;
 
@@ -9,15 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dto.User2DTO;
-import service.User2Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@WebServlet("/user2/register.do")
-public class RegisterController extends HttpServlet{
+import kr.co.jboard2.service.UserService;
+
+@WebServlet("/user/login.do")
+public class LoginController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	
-	private User2Service service = User2Service.getInstance();
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	
+	private UserService service = UserService.getInstance();
 	
 	@Override
 	public void init() throws ServletException {
@@ -25,21 +29,21 @@ public class RegisterController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/user2/register.jsp");
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/user/login.jsp");
 		dispatcher.forward(req, resp);
+		
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		User2DTO user = new User2DTO();
+		String uid = req.getParameter("uid");
+		String pass = req.getParameter("pass");
 		
-		user.setUid(req.getParameter("uid"));
-		user.setName(req.getParameter("name"));
-		user.setBirth(req.getParameter("birth"));
-		user.setAddr(req.getParameter("addr"));
+		logger.debug(uid);
 		
-		service.insertUser2(user);
+		service.selectUser(uid, pass);
 		
-		resp.sendRedirect("/ch10/user2/list.do");
 	}
+	
+	
 }
