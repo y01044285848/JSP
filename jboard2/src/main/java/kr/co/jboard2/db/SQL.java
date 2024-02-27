@@ -22,12 +22,16 @@ public class SQL {
 										   + "`sms`=?, "
 										   + "`rdate`=NOW()";
 	
-	public static final String SELECT_USER_FOR_LOGIN = "SELECT * FROM `User` WHERE `uid`=? AND `pass`=SHA2(?, 256)";
-	
+	public static final String INSERT_FILE = "INSERT INTO `File` SET "
+											+ "`ano`=?, "
+											+ "`oName`=?, "
+											+ "`sName`=?, "
+											+ "`rdate`=NOW()";
 	
 	public static final String INSERT_ARTICLE = "INSERT INTO `Article` SET "
 												+ "`title`=?, "
 												+ "`content`=?, "
+												+ "`file`=?, "
 												+ "`writer`=?, "
 												+ "`regip`=?, "
 												+ "`rdate`=NOW()";
@@ -38,6 +42,8 @@ public class SQL {
 												+ "`writer` = ?, "
 												+ "`regip` = ?, "
 												+ "`rdate` = NOW()";
+	
+	public static final String SELECT_USER_FOR_LOGIN = "SELECT * FROM `User` WHERE `uid`=? AND `pass`=SHA2(?, 256)";
 	
 	public static final String SELECT_COUNT_TOTAL = "SELECT COUNT(*) FROM `Article` AS a "
 												+ "JOIN `User` AS b ON a.writer = b.uid "
@@ -52,7 +58,7 @@ public class SQL {
 	public static final String SELECT_ARTICLES_WHERE_TITLE_CONTENT = "AND (`title` LIKE ? OR `content` LIKE ?)";											
 	public static final String SELECT_ARTICLES_WHERE_WRITER = "AND `nick` LIKE ?";											
 	
-	public static final String SELECT_ARTICES_ORDER_LIMIT = "ORDER BY `no` DESC LIMIT ?, 10";
+	public static final String SELECT_ARTICLES_ORDER_LIMIT = "ORDER BY `no` DESC LIMIT ?, 10";
 	
 	public static final String SELECT_COMMENTS = "SELECT a.*, u.`nick` FROM `Article` AS a "
 												+ "JOIN `user` AS u ON a.writer = u.uid "

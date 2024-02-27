@@ -8,12 +8,12 @@
                         <caption>글수정</caption>
                         <tr>
                             <th>제목</th>
-                            <td><input type="text" name="title" placeholder="제목을 입력하세요."/></td>
+                            <td><input type="text" name="title" value="${article.getTitle()}"/></td>
                         </tr>
                         <tr>
                             <th>내용</th>
                             <td>
-                                <textarea name="content"></textarea>
+                                <textarea name="content">${article.getContent()}</textarea>
                             </td>
                         </tr>
                         <tr>

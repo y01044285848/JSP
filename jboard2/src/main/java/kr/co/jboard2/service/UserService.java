@@ -30,8 +30,8 @@ public class UserService {
 	public void insertUser(UserDTO userDTO) {
 		dao.insertUser(userDTO);
 	}
-	public UserDTO selectUser(String uid, String pass) {
-		return dao.selectUser(uid, pass);
+	public UserDTO selectUserForLogin(String uid, String pass) {
+		return dao.selectUserForLogin(uid, pass);
 	}
 	public void deleteUser() {}
 	public void updateUser() {}	

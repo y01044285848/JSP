@@ -2,7 +2,6 @@ package kr.co.jboard2.controller;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,39 +11,28 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import kr.co.jboard2.dto.ArticleDTO;
 import kr.co.jboard2.service.ArticleService;
 
-@WebServlet("/view.do")
-public class ViewController extends HttpServlet{
+@WebServlet("/delete.do")
+public class DeleteController extends HttpServlet{
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -9040060042780306760L;
 	
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	private ArticleService service = ArticleService.getInstance();
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-
 	@Override
 	public void init() throws ServletException {
-		
+		// TODO Auto-generated method stub
+		super.init();
 	}
-	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
 		String no = req.getParameter("no");
 		
-		ArticleDTO articleDTO = service.selectArticle(Integer.parseInt(no));
-		req.setAttribute("article", articleDTO);
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/view.jsp");
-		dispatcher.forward(req, resp);
-		
+		service.deleteArticle(Integer.parseInt(no));
+		resp.sendRedirect("/jboard2/list.do");
 	}
 	
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-	
-	}
-	
 }

@@ -1,5 +1,17 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="./_header.jsp" %>
+<script>
+	window.onload =()=>{
+		const btnRemove = document.getElementsByClassName('btnRemove')[0];
+		btnRemove.onclick = () =>{
+			if(confirm('삭제 하시겠습니까?')){
+				return true;
+			}else{
+				return false;
+			}
+		}
+	}
+</script>
         <main id="board">
             <section class="view">
                 
@@ -7,7 +19,7 @@
                     <caption>글보기</caption>
                     <tr>
                         <th>제목</th>
-                        <td><input type="text" name="title" value="제목입니다." readonly/></td>
+                        <td><input type="text" name="title" value="${article.getTitle()}" readonly/></td>
                     </tr>
                     <tr>
                         <th>파일</th>
@@ -16,15 +28,15 @@
                     <tr>
                         <th>내용</th>
                         <td>
-                            <textarea name="content" readonly>내용 샘플입니다.</textarea>
+                            <textarea name="content" readonly>${article.getContent()}</textarea>
                         </td>
                     </tr>                    
                 </table>
                 
                 <div>
-                    <a href="#" class="btn btnRemove">삭제</a>
-                    <a href="./modify.html" class="btn btnModify">수정</a>
-                    <a href="./list.html" class="btn btnList">목록</a>
+                    <a href="/jboard2/delete.do?no=${article.getNo()}" class="btn btnRemove">삭제</a>
+                    <a href="/jboard2/modify.do?no=${article.getNo()}" class="btn btnModify">수정</a>
+                    <a href="/jboard2/list.do" class="btn btnList">목록</a>
                 </div>
 
                 <!-- 댓글목록 -->

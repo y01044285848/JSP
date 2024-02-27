@@ -8,10 +8,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import kr.co.jboard2.dto.UserDTO;
 import kr.co.jboard2.service.UserService;
 
 @WebServlet("/user/login.do")
@@ -40,8 +42,21 @@ public class LoginController extends HttpServlet {
 		String pass = req.getParameter("pass");
 		
 		logger.debug(uid);
-		
-		service.selectUser(uid, pass);
+		UserDTO userDTO = service.selectUserForLogin(uid, pass);
+		if(userDTO != null) {
+			logger.debug(userDTO.toString());
+			//request session / httpsession 차이 확인
+			//req.getSession().setAttribute("sessUser", userDTO);
+			
+			HttpSession session = req.getSession();
+			session.setAttribute("sessUser", userDTO);
+
+			resp.sendRedirect("/jboard2/list.do");
+			
+		}else {
+			resp.sendRedirect("/jboard2/user/login.do?code=100");
+			
+		}
 		
 	}
 	
