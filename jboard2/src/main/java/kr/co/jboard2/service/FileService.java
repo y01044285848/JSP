@@ -2,6 +2,8 @@ package kr.co.jboard2.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import kr.co.jboard2.dao.FileDAO;
 import kr.co.jboard2.dto.FileDTO;
 
@@ -18,7 +20,7 @@ public class FileService {
 		dao.insertFile(fileDTO);
 	} 
 	
-	public FileDTO selectFile(int fno) {
+	public FileDTO selectFile(String fno) {
 		return dao.selectFile(fno);
 	} 
 	public List<FileDTO> selectFiles() {
@@ -27,7 +29,7 @@ public class FileService {
 	public void updateFile(FileDTO fileDTO) {
 		dao.updateFile(fileDTO);
 	} 
-	public void deleteFile(int fno) {
-		dao.deleteFile(fno);
+	public void deleteFile(HttpServletRequest req, String ano) {
+		dao.deleteFile(req, ano);
 	} 
 }

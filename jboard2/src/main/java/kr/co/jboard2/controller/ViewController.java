@@ -1,6 +1,7 @@
 package kr.co.jboard2.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -34,8 +35,14 @@ public class ViewController extends HttpServlet{
 		
 		String no = req.getParameter("no");
 		
-		ArticleDTO articleDTO = service.selectArticle(Integer.parseInt(no));
+		ArticleDTO articleDTO = service.selectArticle(no);
+		List<ArticleDTO> comments = service.selectComment(no);
+		
 		req.setAttribute("article", articleDTO);
+		req.setAttribute("comments", comments);
+		
+		logger.debug(articleDTO.toString());
+		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/view.jsp");
 		dispatcher.forward(req, resp);
 		

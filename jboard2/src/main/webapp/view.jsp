@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="./_header.jsp" %>
 <script>
 	window.onload =()=>{
@@ -21,10 +22,16 @@
                         <th>제목</th>
                         <td><input type="text" name="title" value="${article.getTitle()}" readonly/></td>
                     </tr>
+                    <c:if test="${article.file > 0 }">
                     <tr>
                         <th>파일</th>
-                        <td><a href="#">2020년 상반기 매출자료.xls</a>&nbsp;<span>7</span>회 다운로드</td>
+                        <td>
+                        <c:forEach var="file" items="${article.fileDTOs}">
+                        <a href="/jboard2/fileDownload.do?fno=${file.fno}">${file.oName}</a>&nbsp;<span>${file.download}</span>회 다운로드
+                        </c:forEach>
+                        </td>
                     </tr>
+                    </c:if>
                     <tr>
                         <th>내용</th>
                         <td>
@@ -34,7 +41,7 @@
                 </table>
                 
                 <div>
-                    <a href="/jboard2/delete.do?no=${article.getNo()}" class="btn btnRemove">삭제</a>
+                    <a href="/jboard2/delete.do?no=${article.getNo()}&&file=${article.file}" class="btn btnRemove">삭제</a>
                     <a href="/jboard2/modify.do?no=${article.getNo()}" class="btn btnModify">수정</a>
                     <a href="/jboard2/list.do" class="btn btnList">목록</a>
                 </div>
@@ -42,18 +49,23 @@
                 <!-- 댓글목록 -->
                 <section class="commentList">
                     <h3>댓글목록</h3>                   
-
-                    <article>
-                        <span class="nick">길동이</span>
-                        <span class="date">20-05-20</span>
-                        <p class="content">댓글 샘플 입니다.</p>                        
+					
+                    
+                    <c:if test="${empty comments}">
+                    	<p class="empty">등록된 댓글이 없습니다.</p>
+                    </c:if>
+                    
+					<c:forEach var="comment" items="${comments}">
+					<article>                    
+						<span class="nick">${comment.nick}</span>
+                        <span class="date">${comment.rdate}</span>
+                        <p class="content">${comment.content}</p>                        
                         <div>
                             <a href="#" class="remove">삭제</a>
                             <a href="#" class="modify">수정</a>
                         </div>
                     </article>
-
-                    <p class="empty">등록된 댓글이 없습니다.</p>
+					</c:forEach>
 
                 </section>
 

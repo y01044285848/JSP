@@ -11,6 +11,8 @@ public class SQL {
 	public static final String WHERE_HP = "WHERE `hp` = ?";
 	public static final String WHERE_EMAIL = "WHERE `email` = ?";
 	
+//////////////////////////////////////// INSERT ////////////////////////////////////////////////////////
+	
 	public static final String INSERT_USER = "INSERT INTO `User` SET "
 										   + "`uid`=?, "
 										   + "`pass`=SHA2(?, 256), "
@@ -43,6 +45,8 @@ public class SQL {
 												+ "`regip` = ?, "
 												+ "`rdate` = NOW()";
 	
+	//////////////////////////////////////// SELECT ////////////////////////////////////////////////////////
+	
 	public static final String SELECT_USER_FOR_LOGIN = "SELECT * FROM `User` WHERE `uid`=? AND `pass`=SHA2(?, 256)";
 	
 	public static final String SELECT_COUNT_TOTAL = "SELECT COUNT(*) FROM `Article` AS a "
@@ -66,8 +70,15 @@ public class SQL {
 												+ "ORDER BY `no` ASC"; 
 			//"SELECT * FROM `Article` WHERE `parent` = ?";
 	
+	public static final String SELECT_FILE = "SELECT * FROM `File` WHERE `fno`=?";
 	
-	public static final String SELECT_ARTICLE = "SELECT * FROM `Article` WHERE `no` = ?"; 
+	public static final String SELECT_FILE_BY_ANO = "SELECT * FROM `File` WHERE `ano`=?";
+	
+	public static final String SELECT_ARTICLE = "SELECT * FROM `Article` AS a "
+												+ "LEFT JOIN `File` AS b ON a.`no` = b.`ano` "
+												+ "WHERE `no` = ?"; 
+	
+//////////////////////////////////////////// UPDATE ////////////////////////////////////////////////////////
 	
 	public static final String UPDATE_ARTICLE = "UPDATE `Article` SET `title`=?, `content` = ? WHERE `no` = ?";
 	
@@ -78,9 +89,15 @@ public class SQL {
 	
 	public static final String UPDATE_COMMENT = "UPDATE `Article` SET `content` = ? where `no` = ?";
 	
+	public static final String UPDATE_FILE_DOWNLOAD = "UPDATE `File` SET `download` = `download` + 1 WHERE `fno`=?";
+	
+////////////////////////////////////////////DELETE////////////////////////////////////////////////////////
+	
 	public static final String DELETE_ARTICLE = "DELETE FROM `Article` WHERE `no`= ? OR `parent` = ?";
 	
 	public static final String DELETE_COMMENT = "DELETE FROM `Article` WHERE `no`=?";
+	
+	public static final String DELETE_FILE ="DELETE FROM `File` WHERE `ano`=?";
 	
 	
 }

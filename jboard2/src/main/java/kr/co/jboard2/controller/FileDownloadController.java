@@ -11,17 +11,18 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import kr.co.jboard2.dto.FileDTO;
 import kr.co.jboard2.service.ArticleService;
 import kr.co.jboard2.service.FileService;
 
-@WebServlet("/delete.do")
-public class DeleteController extends HttpServlet{
+@WebServlet("/fileDownload.do")
+public class FileDownloadController extends HttpServlet{
 
-	private static final long serialVersionUID = -9040060042780306760L;
+	private static final long serialVersionUID = 1L;
 	
-	private ArticleService articleService = ArticleService.getInstance();
-	private FileService fileService = FileService.getInstance();
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	private FileService service = FileService.getInstance();
+	private ArticleService articleService = ArticleService.getInstance();
 	
 	@Override
 	public void init() throws ServletException {
@@ -30,15 +31,18 @@ public class DeleteController extends HttpServlet{
 	}
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String no = req.getParameter("no");
-		String file = req.getParameter("file");
-		logger.debug(file);
-		if(Integer.parseInt(file) > 0) {
-			fileService.deleteFile(req, no);
-		}
-		articleService.deleteArticle(no);
+
+		String fno = req.getParameter("fno");
+		// 파일 조회
+		FileDTO fileDTO = service.selectFile(fno);
+		// 파일 다운로드
+		articleService.fileDownload(req, resp, fileDTO);
 		
-		resp.sendRedirect("/jboard2/list.do");
+	}
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		super.doPost(req, resp);
 	}
 	
 }
